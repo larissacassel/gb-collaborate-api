@@ -1,0 +1,70 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API Collaborate - Grupo Boticario",
+    "description": "Essa é uma API para gerenciamento de projetos",
+    "contact": {
+      "email": "lari.cassel@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+ 
+  "paths": {
+    "/user/register": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create users",
+        "description": "",
+        "operationId": "photoId",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "E-mail user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pass",
+            "in": "path",
+            "description": "User password",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConfirmPassword",
+            "in": "path",
+            "description": "Confirm password",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "GithubUser",
+            "in": "path",
+            "description": "Github username",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    }
+  }
+}
