@@ -31,6 +31,8 @@
         "no-ternary": "off",
         "no-throw-literal":"off",
         "no-negated-condition":"off",
+        "consistent-return":"off",
+        "import/no-extraneous-dependencies":"off",
         "quote-props": [
             "error",
             "as-needed"

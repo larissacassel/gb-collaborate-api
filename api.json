@@ -13,11 +13,11 @@
     "/user/register": {
       "post": {
         "tags": [
-          "User"
+          "auth"
         ],
         "summary": "Create users",
         "description": "",
-        "operationId": "photoId",
+        "operationId": "register",
         "parameters": [
           {
             "name": "email",
@@ -29,27 +29,9 @@
             }
           },
           {
-            "name": "pass",
+            "name": "name",
             "in": "path",
             "description": "User password",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "ConfirmPassword",
-            "in": "path",
-            "description": "Confirm password",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "GithubUser",
-            "in": "path",
-            "description": "Github username",
             "required": true,
             "schema": {
               "type": "string"
