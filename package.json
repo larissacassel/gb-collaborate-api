@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha 'test/**/*.js' --recursive --no-deprecation --timeout 10000 --exit",
+    "coverage": "nyc npm run test",
     "start": "node src/server",
     "dev": "docker-compose down && docker-compose up"
   },
@@ -21,8 +22,13 @@
     "swagger-ui-express": "^4.6.1"
   },
   "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
     "eslint": "^8.34.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.27.5"
+    "eslint-plugin-import": "^2.27.5",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "sinon": "^15.0.1"
   }
 }
