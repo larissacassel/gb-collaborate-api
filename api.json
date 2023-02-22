@@ -1,37 +1,216 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "API Collaborate - Grupo Boticario",
-    "description": "Essa é uma API para gerenciamento de projetos",
+    "title": "Grupo Boticário - ColaborateApi 1.0",
+    "description": "Teste técnico para a vaga de Backend Developer no [grupo boticário](https://www.grupoboticario.com.br/carreiras/).",
     "contact": {
       "email": "lari.cassel@gmail.com"
     },
     "version": "1.0.0"
   },
- 
+  "externalDocs": {
+    "description": "frontend - App",
+    "url": "https://gb-collaborate-api.herokuapp.com/docs/"
+  },
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations about user"
+    },
+    {
+      "name": "languages",
+      "description": "programming languages"
+    },
+    {
+      "name": "repos",
+      "description": "Popular Github Repositories"
+    }
+  ],
   "paths": {
-    "/user/register": {
+    "/user/create": {
       "post": {
         "tags": [
-          "auth"
+          "user"
         ],
-        "summary": "Create users",
-        "description": "",
-        "operationId": "register",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "path",
-            "description": "E-mail user",
-            "required": true,
-            "schema": {
-              "type": "string"
+        "summary": "Creates user account",
+        "description": "create an account using github username",
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
             }
           },
+          "422": {
+            "description": "error operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNameIsrequired"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "error operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNameInvalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Logs user into the system",
+        "description": "generate access token",
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSucess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSucess"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "password and userName is required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNameIsrequired"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNameIsrequired"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "password or useName is incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref":"#/components/schemas/IncorrectPassword"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/IncorrectPassword"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get user data by acessToken",
+        "description": "",
+        "operationId": "?displayOperationId=true",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No token provided."
+          }
+        },
+        "security": [
           {
-            "name": "name",
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+
+
+    "/languages": {
+      "get": {
+        "tags": [
+          "languages"
+        ],
+        "summary": "Returns a list of languages",
+        "description": "",
+        "operationId": "?displayOperationId=true",
+        "responses": {
+          "200": {
+            "description": "Returns array of languages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/languages"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/repos/{language}": {
+      "get": {
+        "tags": [
+          "repos"
+        ],
+        "summary": "Return a list of repositories",
+        "description": "list of most popular repositories of the language.",
+        "operationId": "?displayOperationId=true",
+        "parameters": [
+          {
+            "name": "language",
             "in": "path",
-            "description": "User password",
+            "description": "programming language",
             "required": true,
             "schema": {
               "type": "string"
@@ -39,13 +218,201 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "successful operation"
-          },
-          "401": {
-            "description": "Invalid username/password supplied"
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type":"array",
+                  "items":{
+                    "$ref": "#/components/schemas/Repos"
+                  }
+                }
+              }
+            }
           }
         }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "example": 109499032352
+          },
+          "userName": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          },
+          "avatar": {
+            "type": "string",
+            "example": "https://avatars.githubusercontent.com/u/698437?v=4"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "CreateUser": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "example": "github_User_Name"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          },
+          "confirmPassword": {
+            "type": "string",
+            "example": "12345"
+          }
+       
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "example": "github_User_Name"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "Repos": {
+        "type": "object",
+        "properties":  {
+          "username": {
+            "type":"string",
+            "example":"airbnb"
+          },
+          "owner": {
+            "type":"string",
+            "example":"airbnb"
+          },
+          "description": {
+            "type":"string",
+            "example":"JavaScript Style Guide"
+          },
+          "url": {
+            "type":"string",
+            "example":"https://github.com/airbnb/javascript"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "IncorrectPassword": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Senha Inválida"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "IncorrectUserName": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 401
+          },
+          "message": {
+            "type": "string",
+            "example": "Usuário não encontrado"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "LoginSucess": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey.saaspdwdZjFlODM2Zjc2NzAyYzQxNGM4NiIsImlhdCI6MTY3NzAzMjMwNn0.Jo4UtVlMeeISxsrxAsdB2H2RVU_fssnEEMjh93VyCGg"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "UserNameIsrequired": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 422
+          },
+          "message": {
+            "type": "string",
+            "example": "Username é obrigatorio"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "UserNameInvalid": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 404
+          },
+          "message": {
+            "type": "string",
+            "example": "Usuário do github inválido"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "languages": {
+        "type": "object",
+        "properties": {
+          "languages": {
+            "type": "array",
+            "example": ["javascript",
+            "go",
+            "java",
+            "react",
+            "nodejs"]
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "name": "Bearer"
       }
     }
   }
