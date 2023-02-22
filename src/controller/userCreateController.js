@@ -5,12 +5,12 @@ const User = require('../models/User')
 const { validateErrors } = require('../constants')
 const api = require('../services/api')
 
-class AuthRegisterController {
+class UserCreateController {
     static async post(req, res) {
         try {
-            AuthRegisterController.validateBody(req)
+            UserCreateController.validateBody(req)
             const { userName, password } = req.body
-            const avatar = await AuthRegisterController.githubUserAvatar(userName)
+            const avatar = await UserCreateController.githubUserAvatar(userName)
 
             const userExists = await User.findOne({ userName })
             if (userExists) {
@@ -37,7 +37,7 @@ class AuthRegisterController {
     }
 
     static validateBody(req) {
-        if (!req.body) {
+        if (!req || !req.body) {
             throw (validateErrors.requestFail)
         }
 
@@ -62,9 +62,9 @@ class AuthRegisterController {
         return api.get(`/users/${userName}`)
         .then((response) => response.data.avatar_url)
         .catch((err) => {
-            throw ({ code: err.response.status, message: 'Usuario do gihub invalido' })
+            throw ({ code: err.response.status, message: 'Usuário do github inválido' })
         })
     }
 }
 
-module.exports = AuthRegisterController
+module.exports = UserCreateController

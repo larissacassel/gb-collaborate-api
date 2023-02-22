@@ -1,27 +1,33 @@
 'use_strict'
 
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const { validateErrors } = require('../constants')
 
-class AuthLoginController {
+class UserLoginController {
     static async post(req, res) {
         try {
-            AuthLoginController.validateBody(req)
+            UserLoginController.validateBody(req)
             const { userName, password } = req.body
 
             const user = await User.findOne({ userName })
             if (!user) {
-                throw (validateErrors.useNotExists)
+                throw (validateErrors.userNotExists)
             }
 
             const checkPassword = await bcrypt.compare(password, user.password)
 
             if (!checkPassword) {
-                return res.status(422).json({ message: 'Senha Inválida' })
+                return res.status(401).json({ message: 'Senha Inválida' })
             }
 
-            return res.status(200).send()
+            const secret = process.env.SECRET
+            const token = jwt.sign({
+                id: user._id,
+            }, secret)
+
+            return res.status(200).json({ token })
         } catch (err) {
             if (err.code) {
                 return res.status(err.code).json(err)
@@ -45,4 +51,4 @@ class AuthLoginController {
     }
 }
 
-module.exports = AuthLoginController
+module.exports = UserLoginController

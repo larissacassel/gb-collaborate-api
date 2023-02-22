@@ -1,6 +1,6 @@
 module.exports = {
     requestFail: {
-        code: 400,
+        code: 404,
         message: 'request failed',
     },
 
@@ -24,11 +24,11 @@ module.exports = {
     },
 
     userExists: {
-        code: 422,
-        message: 'Por favor, utilize outro email',
+        code: 400,
+        message: 'Por favor, utilize outro userName',
     },
-    useNotExists: {
-        code: 404,
-        message: 'Usuario nao encontrado',
+    userNotExists: {
+        code: 401,
+        message: 'Usuário não encontrado',
     },
   }
