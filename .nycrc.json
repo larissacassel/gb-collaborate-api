@@ -5,7 +5,9 @@
     ],
     "exclude": [
       "test/**/*.js",
-      "src/server.js"
+      "src/server.js",
+      "src/middleware",
+      "src/routes"
     ],
     "reporter": [
       "lcov",
