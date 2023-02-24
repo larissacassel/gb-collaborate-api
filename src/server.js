@@ -20,3 +20,5 @@ app.use(routesV1)
 app.listen(port, () => {
     console.log('Server running!')
 })
+
+module.exports = { app }

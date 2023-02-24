@@ -1,8 +1,10 @@
 'use_strict'
 
+const languages = require('../utils/language')
+
 class LanguagesController {
     static async get(req, res) {
-        res.status(200).json({ languages: ['javascript', 'go', 'java', 'react', 'nodejs'] })
+        res.status(200).json(languages)
     }
 }
 

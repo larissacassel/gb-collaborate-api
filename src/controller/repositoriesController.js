@@ -1,12 +1,24 @@
 'use_strict'
 
 const api = require('../services/api')
+const { validateErrors } = require('../constants')
 
 class RepositoriesController {
     static async get(req, res) {
         try {
+            if (!req || !req.params) {
+                throw (validateErrors.requestFail)
+            }
+            if (!req.params.language) {
+                throw (validateErrors.requestFail)
+            }
+
             const { language } = req.params
             const languageRepos = await RepositoriesController.githubRepositories(language)
+
+            if (languageRepos.length === 0) {
+                res.status(422).json({ message: 'linguagem de programação invalida' })
+            }
 
             res.status(200).json(languageRepos)
         } catch (err) {
@@ -21,7 +33,7 @@ class RepositoriesController {
         return api.get(`/legacy/repos/search/${language}`)
         .then((response) => response.data.repositories)
         .catch((err) => {
-            throw ({ code: err.response.status, message: 'tec invalido' })
+            throw ({ code: err.response.status, message: 'linguagem de programação invalida' })
         })
     }
 }

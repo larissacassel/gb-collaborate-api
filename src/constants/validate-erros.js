@@ -31,4 +31,9 @@ module.exports = {
         code: 401,
         message: 'Usuário não encontrado',
     },
+
+    weakPassword: {
+        code: 422,
+        message: 'Senha fraca',
+    },
   }

@@ -4,6 +4,9 @@ const { validateErrors } = require('../constants')
 class UserController {
     static async get(req, res) {
         try {
+            if (!req) {
+                throw (validateErrors.requestFail)
+            }
             const { userId } = req
             const user = await User.findById(userId, '-password')
             if (!user) {

@@ -53,6 +53,10 @@ class UserCreateController {
             throw (validateErrors.confirmPasswordIsRequired)
         }
 
+        if (req.body.password.length < 6) {
+            throw (validateErrors.weakPassword)
+        }
+
         if (req.body.password !== req.body.confirmPassword) {
             throw (validateErrors.differentsPasswords)
         }
