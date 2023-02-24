@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Grupo Boticário - ColaborateApi 1.0",
+    "title": "Grupo Boticário - CollaborateApi 1.0",
     "description": "Teste técnico para a vaga de Backend Developer no [grupo boticário](https://www.grupoboticario.com.br/carreiras/).",
     "contact": {
       "email": "lari.cassel@gmail.com"
