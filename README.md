@@ -47,11 +47,11 @@
 
 Collaborate é um projeto que tem o objetivo de conectar com a api do github e listar os repositorios mais populares de algumas tecnologias.
 
-_e algumas features extras como:_
+_e algumas características extras como:_
 
 * Criar usuários com o mesmo `userName` do github.
-* Login e autenticação com JWT.
-* MongoDb como banco de dados.
+* Autenticação com JWT.
+* Mongodb como banco de dados.
 * Deploy no heroku.
 * Aplicativo disponível na play store
 
