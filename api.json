@@ -208,7 +208,7 @@
         ],
         "summary": "Return a list of repositories",
         "description": "list of most popular repositories.",
-        "operationId": "?displayOperationId=true",
+        "operationId": "",
         "responses": {
           "200": {
             "description": "successful operation",
