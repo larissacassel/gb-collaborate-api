@@ -63,7 +63,11 @@ class UserCreateController {
     }
 
     static githubUserAvatar(userName) {
-        return api.get(`/users/${userName}`)
+        return api.get(`/users/${userName}`, {
+            headers: {
+                Authorization: `Bearer ${process.env.GITHUB_TOKON}`,
+            },
+           })
         .then((response) => response.data.avatar_url)
         .catch((err) => {
             throw ({ code: err.response.status, message: 'Usuário do github inválido' })

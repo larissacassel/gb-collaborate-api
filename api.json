@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Grupo Boticário - CollaborateApi 1.0",
+    "title": "Grupo Boticário - CollaborateApi",
     "description": "Teste técnico para a vaga de Backend Developer no [grupo boticário](https://www.grupoboticario.com.br/carreiras/).",
     "contact": {
       "email": "lari.cassel@gmail.com"
@@ -9,8 +9,8 @@
     "version": "1.0.0"
   },
   "externalDocs": {
-    "description": "frontend - App",
-    "url": "https://gb-collaborate-api.herokuapp.com/docs/"
+    "description": "Frontend - App",
+    "url": "https://play.google.com/store/apps/details?id=com.larissacassel.gbcollaborate"
   },
   "tags": [
     {
@@ -190,7 +190,35 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/languages"
+                  "type":"array",
+                  "items": {
+                    "$ref": "#/components/schemas/languages"
+                  } 
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/repos": {
+      "get": {
+        "tags": [
+          "repos"
+        ],
+        "summary": "Return a list of repositories",
+        "description": "list of most popular repositories.",
+        "operationId": "?displayOperationId=true",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type":"array",
+                  "items":{
+                    "$ref": "#/components/schemas/Repos"
+                  }
                 }
               }
             }
@@ -241,16 +269,12 @@
         "type": "object",
         "properties": {
           "_id": {
-            "type": "integer",
-            "example": 109499032352
+            "type": "string",
+            "example": "109499032352"
           },
           "userName": {
             "type": "string",
             "example": "theUser"
-          },
-          "password": {
-            "type": "string",
-            "example": "12345"
           },
           "avatar": {
             "type": "string",
@@ -397,13 +421,13 @@
       "languages": {
         "type": "object",
         "properties": {
-          "languages": {
-            "type": "array",
-            "example": ["javascript",
-            "go",
-            "java",
-            "react",
-            "nodejs"]
+          "key":{
+            "type":"string",
+            "example": "01"
+          },
+          "title":{
+            "type":"string",
+            "example":"javascript"
           }
         }
       }

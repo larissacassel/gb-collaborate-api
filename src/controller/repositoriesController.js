@@ -30,10 +30,14 @@ class RepositoriesController {
     }
 
     static githubRepositories(language) {
-        return api.get(`/legacy/repos/search/${language}`)
+        return api.get(`/legacy/repos/search/${language}`, {
+            headers: {
+                Authorization: `Bearer ${process.env.GITHUB_TOKON}`,
+            },
+           })
         .then((response) => response.data.repositories)
         .catch((err) => {
-            throw ({ code: err.response.status, message: 'linguagem de programação invalida' })
+            throw ({ code: err.response.status, message: 'Error' })
         })
     }
 }

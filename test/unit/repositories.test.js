@@ -1,7 +1,7 @@
 const assert = require('assert/strict')
 const sandbox = require('sinon').createSandbox()
 
-const { RepositoriesController } = require('../../src/controller')
+const { RepositoriesController, PopularRepositoriesController } = require('../../src/controller')
 const User = require('../../src/models/User')
 const api = require('../../src/services/api')
 
@@ -67,5 +67,22 @@ describe('Unit tests for github repos controller', () => {
 
     assert(res.status.called)
     assert(res.status.calledWith(200))
+  })
+
+  it('should get gihub popular repositories', async () => {
+    await assert.rejects(async () => {
+      await PopularRepositoriesController.get(req, res)
+    })
+
+    assert(res.status.called)
+    assert(res.status.calledWith(200))
+  })
+
+  it('should throw ValidationError when github promise error', async () => {
+    sandbox.stub(api, 'get').resolves(undefined)
+
+    await assert.rejects(async () => {
+      await PopularRepositoriesController.get(req, res)
+    })
   })
 })
